@@ -11,6 +11,15 @@
   </div>
   <div class="sidebar-wrapper">
     <ul class="nav">
+
+        <li class="nav-item{{ $activePage == 'renters' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('renters.index') }}">
+                <i class="material-icons">face</i>
+                <p>{{ __('Renters') }}</p>
+            </a>
+        </li>
+
+
       <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('home') }}">
           <i class="material-icons">dashboard</i>
