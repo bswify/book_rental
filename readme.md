@@ -5,4 +5,4 @@
 3. set DB username pass port
 4. run composer update
 
-Sign in with admin@bookrental.com and the password 1234 
+Sign in with admin@bookrental.com and the password 123456
