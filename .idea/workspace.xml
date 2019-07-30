@@ -14,11 +14,6 @@
       <executable />
     </execution>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>dashboard</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -122,6 +117,11 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\book_rental" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -151,7 +151,7 @@
       <option name="presentableId" value="Default" />
       <updated>1564457417459</updated>
       <workItem from="1564457419528" duration="7484000" />
-      <workItem from="1564495449458" duration="1638000" />
+      <workItem from="1564495449458" duration="10010000" />
     </task>
     <servers />
   </component>
