@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2019 at 06:40 AM
+-- Generation Time: Jul 30, 2019 at 10:57 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -25,10 +25,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `book`
+-- Table structure for table `books`
 --
 
-CREATE TABLE `book` (
+CREATE TABLE `books` (
   `book_id` int(11) NOT NULL COMMENT 'รหัสหนังสือ',
   `book_name` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'ชื่อหนังสือ',
   `book_description` text COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'รายละเอียดหนังสือ',
@@ -39,10 +39,10 @@ CREATE TABLE `book` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `booktype`
+-- Table structure for table `booktypes`
 --
 
-CREATE TABLE `booktype` (
+CREATE TABLE `booktypes` (
   `booktype_id` int(11) NOT NULL COMMENT 'รหัสประเภทหนังสือ',
   `booktype_name` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'ชื่อประเภทหนังสือ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -107,10 +107,10 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `renter`
+-- Table structure for table `renters`
 --
 
-CREATE TABLE `renter` (
+CREATE TABLE `renters` (
   `renter_id` int(11) NOT NULL COMMENT 'รหัสผู้เช่า',
   `renter_first_name` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'ชื่อผู้เช่า',
   `renter_last_name` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'นามสกุลผู้เช่า',
@@ -147,22 +147,25 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 --
 
 --
--- Indexes for table `book`
+-- Indexes for table `books`
 --
-ALTER TABLE `book`
-  ADD PRIMARY KEY (`book_id`);
+ALTER TABLE `books`
+  ADD PRIMARY KEY (`book_id`),
+  ADD KEY `booktype_id` (`booktype_id`);
 
 --
--- Indexes for table `booktype`
+-- Indexes for table `booktypes`
 --
-ALTER TABLE `booktype`
+ALTER TABLE `booktypes`
   ADD PRIMARY KEY (`booktype_id`);
 
 --
 -- Indexes for table `book_rental_order`
 --
 ALTER TABLE `book_rental_order`
-  ADD PRIMARY KEY (`book_rental_order_id`);
+  ADD PRIMARY KEY (`book_rental_order_id`),
+  ADD KEY `order_detail_id` (`order_detail_id`),
+  ADD KEY `renter_id` (`renter_id`);
 
 --
 -- Indexes for table `migrations`
@@ -174,7 +177,8 @@ ALTER TABLE `migrations`
 -- Indexes for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  ADD PRIMARY KEY (`order_detail_id`,`book_id`);
+  ADD PRIMARY KEY (`order_detail_id`,`book_id`),
+  ADD KEY `book_id` (`book_id`);
 
 --
 -- Indexes for table `password_resets`
@@ -183,9 +187,9 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `renter`
+-- Indexes for table `renters`
 --
-ALTER TABLE `renter`
+ALTER TABLE `renters`
   ADD PRIMARY KEY (`renter_id`);
 
 --
@@ -200,15 +204,15 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `book`
+-- AUTO_INCREMENT for table `books`
 --
-ALTER TABLE `book`
+ALTER TABLE `books`
   MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสหนังสือ';
 
 --
--- AUTO_INCREMENT for table `booktype`
+-- AUTO_INCREMENT for table `booktypes`
 --
-ALTER TABLE `booktype`
+ALTER TABLE `booktypes`
   MODIFY `booktype_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสประเภทหนังสือ';
 
 --
@@ -230,9 +234,9 @@ ALTER TABLE `order_detail`
   MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสรายละเอียดการเช่าหนังสือ';
 
 --
--- AUTO_INCREMENT for table `renter`
+-- AUTO_INCREMENT for table `renters`
 --
-ALTER TABLE `renter`
+ALTER TABLE `renters`
   MODIFY `renter_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสผู้เช่า';
 
 --
@@ -240,6 +244,29 @@ ALTER TABLE `renter`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `books`
+--
+ALTER TABLE `books`
+  ADD CONSTRAINT `books_ibfk_1` FOREIGN KEY (`booktype_id`) REFERENCES `booktypes` (`booktype_id`);
+
+--
+-- Constraints for table `book_rental_order`
+--
+ALTER TABLE `book_rental_order`
+  ADD CONSTRAINT `book_rental_order_ibfk_1` FOREIGN KEY (`order_detail_id`) REFERENCES `order_detail` (`order_detail_id`),
+  ADD CONSTRAINT `book_rental_order_ibfk_2` FOREIGN KEY (`renter_id`) REFERENCES `renters` (`renter_id`);
+
+--
+-- Constraints for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  ADD CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
